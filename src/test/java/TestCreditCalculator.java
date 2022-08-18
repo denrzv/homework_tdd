@@ -2,6 +2,8 @@ import io.github.denrzv.CreditCalculator;
 import io.github.denrzv.Main;
 import org.junit.jupiter.api.*;
 
+import java.util.concurrent.Callable;
+
 public class TestCreditCalculator {
     final double LOAN = 100_000;
     final double ANNUAL_INTEREST_RATE = 0.12;
@@ -35,5 +37,20 @@ public class TestCreditCalculator {
         System.out.println(interestTotal);
         var interestTotalCalculated = calculator.getInterestTotal(MONTHS, LOAN, ANNUAL_INTEREST_RATE);
         Assertions.assertEquals(interestTotal, interestTotalCalculated);
+    }
+
+    @Test
+    @DisplayName("Тест на невалидные значения")
+    public void shouldThrowException() {
+        CreditCalculator calculator = null;
+        int months = 0;
+        double loan = 0;
+        double interestRate = -1;
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> calculator.getInterestTotal(months, loan, interestRate));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> calculator.getLoanTotal(months, loan, interestRate));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> calculator.getLoanTotal(months, loan, interestRate));
     }
 }
