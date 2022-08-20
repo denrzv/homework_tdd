@@ -1,8 +1,6 @@
 import io.github.denrzv.CreditCalculator;
-import io.github.denrzv.Main;
+import io.github.denrzv.CreditCalculatorImpl;
 import org.junit.jupiter.api.*;
-
-import java.util.concurrent.Callable;
 
 public class TestCreditCalculator {
     final double LOAN = 100_000;
@@ -12,9 +10,8 @@ public class TestCreditCalculator {
     @Test
     @DisplayName("Успешный расчёт ежемесячного платежа")
     public void testGetMonthlyPayment() {
-        CreditCalculator calculator = null;
+        CreditCalculator calculator = new CreditCalculatorImpl();
         double monthlyPayment = LOAN + LOAN * ANNUAL_INTEREST_RATE / 12;
-        System.out.println(monthlyPayment);
         var monthlyPaymentCalculated = calculator.getMonthlyPayment(MONTHS, LOAN, ANNUAL_INTEREST_RATE);
         Assertions.assertEquals(monthlyPayment, monthlyPaymentCalculated);
     }
@@ -22,9 +19,8 @@ public class TestCreditCalculator {
     @Test
     @DisplayName("Успешный расчёт общей суммы возврата в банк")
     public void testGetLoanTotal() {
-        CreditCalculator calculator = null;
+        CreditCalculator calculator = new CreditCalculatorImpl();
         double loanTotal = LOAN + LOAN * ANNUAL_INTEREST_RATE / 12 * MONTHS;
-        System.out.println(loanTotal);
         var loanTotalCalculated = calculator.getLoanTotal(MONTHS, LOAN, ANNUAL_INTEREST_RATE);
         Assertions.assertEquals(loanTotal, loanTotalCalculated);
     }
@@ -32,9 +28,8 @@ public class TestCreditCalculator {
     @Test
     @DisplayName("Успешеый расчёт переплаты за весь период")
     public void testGetInterestTotal() {
-        CreditCalculator calculator = null;
+        CreditCalculator calculator = new CreditCalculatorImpl();
         double interestTotal = LOAN * ANNUAL_INTEREST_RATE / 12 * MONTHS;
-        System.out.println(interestTotal);
         var interestTotalCalculated = calculator.getInterestTotal(MONTHS, LOAN, ANNUAL_INTEREST_RATE);
         Assertions.assertEquals(interestTotal, interestTotalCalculated);
     }
@@ -42,7 +37,7 @@ public class TestCreditCalculator {
     @Test
     @DisplayName("Тест на невалидные значения")
     public void shouldThrowException() {
-        CreditCalculator calculator = null;
+        CreditCalculator calculator = new CreditCalculatorImpl();
         int months = 0;
         double loan = 0;
         double interestRate = -1;
